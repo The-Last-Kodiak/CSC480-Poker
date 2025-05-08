@@ -1,0 +1,55 @@
+# MCTS Poker Bot
+
+This is a heads-up Texas Hold’em bot that uses Monte Carlo Tree Search (MCTS) with UCB1 to decide whether to **fold** or **stay** based on an estimated ≥50% win probability within a 10s time limit.
+
+## Requirements
+
+* Python 3.8+
+* No external packages (uses only standard library)
+
+## Running the Bot
+
+### Pre-flop Only
+
+```bash
+python3 PokerBot.py --hole As Ah
+# Example: pocket Aces should stay
+```
+
+### Pre-flop Fold Example
+
+```bash
+python3 PokerBot.py --hole 7c 2d
+# Expect: fold
+```
+
+### With Community Cards
+
+```bash
+python3 PokerBot.py --hole Kd Qd --community Ah Td 2s
+```
+
+This will:
+
+1. Decide pre-flop.
+2. Simulate a flop (3 cards) and decide pre-turn.
+3. Simulate turn (1 card) and decide pre-river.
+4. Simulate river (1 card) and report final MCTS win probability.
+
+## Example Output
+
+```
+Pre-flop decision: stay
+Flop: ['Ah','Td','2s']
+Pre-turn decision: stay
+Turn: 7c
+Pre-river decision: stay
+River: 5d
+MCTS win probability: 0.912
+```
+
+## Notes
+
+* The bot runs MCTS for \~10 seconds per decision.
+* Hand evaluator covers all classic Hold’em categories (straight flush down to high card).
+* UCB1 balances exploring different opponent-hole possibilities vs. exploiting known strong lines.
